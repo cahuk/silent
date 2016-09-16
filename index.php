@@ -1,8 +1,20 @@
 <?php
 
-// change the following paths if necessary
-$yii = dirname(__FILE__).'/framework/yii.php';
-$config = dirname(__FILE__). '/protected/config/main.php';
+ini_set('display_errors', 1);
 
-require_once($yii);
-S1lent::createWebApplication($config)->run();
+/** @var string $basePath */
+$basePath = __DIR__ . DIRECTORY_SEPARATOR;
+
+/** require autoloader and register it */
+require_once $basePath . 'core' . DIRECTORY_SEPARATOR . 'SilentAutoload.php';
+
+/** require composer vendor autoloader */
+require_once $basePath . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
+
+use \silent\core\Silent;
+use \Symfony\Component\HttpFoundation;
+
+
+
+
+Silent::createWebApplication()->run();
