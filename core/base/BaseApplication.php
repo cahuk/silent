@@ -20,15 +20,16 @@ abstract class BaseApplication
         // create and register application as singleton
         Silent::setApplication($this);
 
-       /* $this->preinit();
 
-        $this->initSystemHandlers();
-        $this->registerCoreComponents();
+        /*
+                $this->initSystemHandlers();
+                $this->registerCoreComponents();
 
-        $this->configure($config);
-        $this->preloadComponents();
+                $this->configure($config);
+                $this->preloadComponents();
+                */
 
-        $this->init();*/
+        $this->init();
     }
 
     /**
@@ -38,6 +39,15 @@ abstract class BaseApplication
      */
     abstract public function processRequest();
 
+
+    /**
+     * Initializes error handlers.
+     */
+    protected function initSystemHandlers()
+    {
+            set_exception_handler([$this,'handleException']);
+            set_error_handler([$this,'handleError'], error_reporting());
+    }
 
     /**
      * Runs the application.
@@ -60,5 +70,12 @@ abstract class BaseApplication
     {
         if($exit)
             exit($status);
+    }
+
+    /**
+     * Initializes
+     */
+    protected function init()
+    {
     }
 }
