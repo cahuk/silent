@@ -10,5 +10,8 @@ use silent\core\base\BaseController;
  */
 class DefaultController extends BaseController
 {
-
+    public function actionIndex()
+    {
+        var_dump(555555);
+    }
 }
