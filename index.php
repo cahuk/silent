@@ -3,6 +3,8 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+date_default_timezone_set('Europe/Kiev');
+
 /** base path  */
 define('BASE_PATH', __DIR__ . DIRECTORY_SEPARATOR);
 

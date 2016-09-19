@@ -15,6 +15,10 @@ abstract class BaseApplication
     /** @var array application components */
     protected $components = [];
 
+    protected $layoutPath;
+    protected $viewPath;
+
+
     /**
      * Constructor.
      * @param array $config application configuration.
@@ -54,7 +58,7 @@ abstract class BaseApplication
      * @param integer $status exit status (value 0 means normal exit while other values mean abnormal exit).
      * @param boolean $exit whether to exit the current request.
      */
-    public function end($status=0,$exit=true)
+    public function end($status=0, $exit=true)
     {
         if($exit)
             exit($status);
@@ -124,7 +128,7 @@ abstract class BaseApplication
     public function setComponents($components)
     {
         foreach($components as $id => $component)
-            $this->setComponent($id,$component);
+            $this->setComponent($id, $component);
     }
 
 
@@ -132,7 +136,7 @@ abstract class BaseApplication
      * @param $id
      * @param $component
      */
-    public function setComponent($id,$component)
+    public function setComponent($id, $component)
     {
         if ($component===null)
         {
@@ -141,7 +145,7 @@ abstract class BaseApplication
         }
         else
         {
-            $this->components[$id]=$component;
+            $this->components[$id] = $component;
         }
 
     }
@@ -157,4 +161,23 @@ abstract class BaseApplication
         ];
         $this->setComponents($components);
     }
+
+
+    /**
+     * @return mixed
+     */
+    public function getLayoutPath()
+    {
+        return $this->layoutPath;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getViewPath()
+    {
+        return $this->viewPath;
+    }
+
+
 }

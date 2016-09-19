@@ -10,8 +10,23 @@ use silent\core\base\BaseController;
  */
 class DefaultController extends BaseController
 {
+
+    public $pageTitle = 'DefaultController - Silent Framework';
+
+    /**
+     *
+     */
     public function actionIndex()
     {
-        var_dump(555555);
+        $this->render('index', ['test' => 'Test data']);
+    }
+
+
+    /**
+     *
+     */
+    public function actionTest()
+    {
+        $this->render('testPage', ['test' => 'Test data']);
     }
 }

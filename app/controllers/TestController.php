@@ -10,8 +10,20 @@ use silent\core\base\BaseController;
  */
 class TestController extends BaseController
 {
+    /**
+     *
+     */
+    public function actionIndex()
+    {
+        $this->render('testingView', ['action' => 'actionIndex']);
+    }
+
+
+    /**
+     *
+     */
     public function actionTest()
     {
-
+        $this->render('testingView', ['action' => 'actionTest']);
     }
 }

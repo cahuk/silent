@@ -15,14 +15,9 @@ class WebApplication extends BaseApplication
 {
     /**  @var string default controller */
     public $defaultController = 'default';
-    /** @var string  */
-    public $layout = 'main';
-
-    protected $viewPath;
-    protected $layoutPath;
 
     private $_controller;
-
+    private $_controllerId;
 
     public function processRequest()
     {
@@ -39,7 +34,7 @@ class WebApplication extends BaseApplication
      */
     public function runController($route)
     {
-        if(($ca = $this->createController($route))!==null)
+        if(($ca = $this->createController($route)) !== null)
         {
             /** @var BaseController $controller  */
             list($controller, $actionID) = $ca;
@@ -68,9 +63,8 @@ class WebApplication extends BaseApplication
         if (($route=trim($route, '/')) === '') {
             $route= $this->defaultController;
         }
-
+        $action = '';
         $route .= '/';
-
         while (($pos = strpos($route, '/')) !== false)
         {
             $id = substr($route, 0 ,$pos);
@@ -79,19 +73,24 @@ class WebApplication extends BaseApplication
                 return null;
             }
 
-            $className = ucfirst($id).'Controller';
-
-            // with namespaces
-            $classFullName = '\\silent\\app\\controllers\\' . $className;
-
-            $action = $this->parseActionParams($route);
-
-            return [
-                new $classFullName(),
-                $action
-            ];
+            /** controller */
+            if (! isset($basePath))  // first segment
+            {
+                $className = ucfirst($id).'Controller';
+                $basePath = (string) $id;
+                $this->_controllerId = $id;
+            } elseif (! $action) {
+                $action = $this->parseActionParams($route);
+            }
+            $route = (string) substr($route, $pos + 1);
 
         }
+        $classFullName = '\\silent\\app\\controllers\\' . $className;
+
+        return [
+            new $classFullName(),
+            $action
+        ];
     }
 
     /**
@@ -100,11 +99,22 @@ class WebApplication extends BaseApplication
      */
     protected function parseActionParams($pathInfo)
     {
-        if(($pos = strpos($pathInfo,'/')) !== false)
+        if(($pos = strpos($pathInfo, '/')) !== false)
         {
             $actionID = substr($pathInfo, 0, $pos);
             return $actionID;
+        } else {
+            return $pathInfo;
         }
     }
+
+    /**
+     * @return mixed
+     */
+    public function getControllerId()
+    {
+        return $this->_controllerId;
+    }
+
 
 }
